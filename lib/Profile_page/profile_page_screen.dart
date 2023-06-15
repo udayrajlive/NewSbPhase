@@ -1,26 +1,51 @@
+
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:fluttertoast/fluttertoast.dart";
 import "package:pull_to_refresh/pull_to_refresh.dart";
+import "package:sb/BMI_screen/BMI_screen.dart";
 import "package:sb/Components/Card.dart";
+import "package:sb/Components/bmi_bar.dart";
 import "package:sb/Components/footstepsProgressIndicator.dart";
 import "package:sb/Components/poppintext.dart";
+
+
+
+
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
-
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 
+
 }
+
+
+
+
 
 class _ProfilePageState extends State<ProfilePage> {
   // RefreshController controller = RefreshController();
+  String? targetSteps;
+  String ? newtargetSteps;
+
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    newtargetSteps;
+    targetSteps;
+    super.setState(fn);
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
-    int footSteps = 3500;
+
     return Scaffold(
       backgroundColor: Color(0xff1C1C1E),
       appBar: AppBar(),
@@ -161,15 +186,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           text: "Today’s Steps",
                           color: Color(0xffB3FA3F),
                         ),
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
+
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                int inputText ;
-                                inputText= footSteps;
-
-
                                 return SizedBox(
                                   width: 200,
                                   height: 200,
@@ -190,14 +212,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                         
                                       ],
                                       onChanged: (value) {
-                                        inputText = value as int;
+                                        newtargetSteps = value;
+                                        print(value);
                                       },
                                     ),
                                     actions: [
                                       ElevatedButton(
                                         onPressed: () {
                                           // Perform any operation with the inputText
+                                         setState(() {
+                                           targetSteps = newtargetSteps;
+                                         });
+                                          print("hey");
+                                          print(targetSteps);
                                           Navigator.of(context).pop();
+
+
                                         },
                                         child: PoppinText(
                                           color: Colors.black,
@@ -205,6 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       ),
                                     ],
+
                                   ),
                                 );
                               },
@@ -218,7 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: Column(
                                 children: [
                                   PoppinText(
-                                    text: " Goal $footSteps",
+                                    text: " Goal $targetSteps",
                                     fontsize: 14,
                                     color: Colors.white,
                                   ),
@@ -234,13 +265,66 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
 
                     ///widget,
-                    ProgressIndicatorWidget()
+                    ProgressIndicatorWidget(targetValue: int.parse(targetSteps!) ,
+                      /// fetch value form the pedometer ...
+                      progressValue: 2300,
+
+                    )
                   ],
                 )),
             SizedBox(
               height: 12,
             ),
-            CardWidget(height: 250, width: 350)
+            CardWidget(height: 250, width: 350,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        PoppinText(
+                          text: "Body Mass Index",
+                          color: Color(0xffB3FA3F),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>  BMIPage(),
+                              ),
+                            );
+                          },
+                          child:  CardWidget(
+                              height: 44,
+                              width: 88,
+                              color: Color(0xff1D1F2B),
+                              padding: EdgeInsets.all(5),
+                              child: Column(
+                                children: [
+                                  PoppinText(
+                                    text: " Weight 75",
+                                    fontsize: 14,
+                                    color: Colors.white,
+                                  ),
+                                  PoppinText(
+                                    text: "Tap to change",
+                                    fontsize: 8,
+                                    color: Color(0xffB3FA3F),
+                                  )
+                                ],
+                              ),
+                          ),
+                        )
+                      ],
+                    ),
+
+                    BmiBar(),
+                    ///widget,
+
+                  ],
+                )
+            )
           ],
         ),
       )),
@@ -360,39 +444,4 @@ class ProfileTiledetails extends StatelessWidget {
   }
 }
 
-class Dialog extends StatefulWidget {
-  @override
-  _DialogState createState() => _DialogState();
 
-  final double? val;
-
-  Dialog({
-    this.val,
-  });
-}
-
-class _DialogState extends State<Dialog> {
-  double value = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    value = widget.val!;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Slider(
-        value: value,
-        min: 0,
-        max: 100,
-        onChanged: (va) {
-          setState(() {
-            value = va;
-          });
-        },
-      ),
-    );
-  }
-}

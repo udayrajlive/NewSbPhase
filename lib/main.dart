@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: Colors.white).copyWith(background: Color(0x505050)).copyWith(background: Color(0xff1C1C1E)),
       ),
       // home:  BMIPage(),
-      home: EditProfileScreen(name: 'uday', lname: '', email: '', weight: '', dob: '', imageUrl: '', address: '', height: '', gender: '', mobileno: '',),
-    // home: ProfilePage(),
+      // home: EditProfileScreen(name: 'uday', lname: '', email: '', weight: '', dob: '', imageUrl: '', address: '', height: '', gender: '', mobileno: '',),
+    home: ProfilePage(),
     //   home : BookingPage(totalBookings: '1',)
     );
   }

@@ -1,34 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:sb/Components/poppintext.dart';
 
+
+
 class ProgressIndicatorWidget extends StatefulWidget {
+   ProgressIndicatorWidget({
+  required this.targetValue,
+    required this.progressValue,
+  Key? key}) : super(key: key);
+
+  late  num progressValue ; // Initial progress value
+  final num targetValue ;
+
   @override
   _ProgressIndicatorWidgetState createState() => _ProgressIndicatorWidgetState();
 }
 
 class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
-  double progressValue = 3500; // Initial progress value
-  double targetValue = 3500; // Target value
+  // double progressValue = 3500; // Initial progress value
+  // double targetValue = 3500; // Target value
 
   @override
   void setState(VoidCallback fn) {
     // TODO: implement setState
-    progressValue;
+    widget.progressValue;
 
     super.setState(fn);
   }
 
 
 
-  void updateProgress(double newValue) {
+  void updateProgress(num newValue) {
     setState(() {
-      progressValue = newValue;
+      widget.progressValue = newValue;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    double progressPercentage = (progressValue / targetValue) * 100;
+    double progressPercentage = (widget.progressValue / widget.targetValue) * 100;
 
     return SizedBox(
       width: 200,
@@ -53,16 +63,17 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
           ),
           Positioned(
             top: 65,
-            left: 65,
+            left: 70,
             child: Column(
               children: [
-                PoppinText(text: '$progressValue',
+                PoppinText(
+                  text: widget.progressValue.toString(),
                   fontsize: 24,
                   color: Color(0xffB3FA3F),
                 ),
 
                 PoppinText(
-                  text: '$targetValue',
+                  text: widget.targetValue.toString(),
                   fontsize: 20,
                   color: Color(0xff464651),
                 ),
@@ -79,7 +90,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                    height: 10,
                    decoration: BoxDecoration(
                      borderRadius:  BorderRadius.all(Radius.circular(12)),
-                     color: progressPercentage!=100? Colors.green:Colors.grey
+                     color: progressPercentage<100 ? Colors.red:Colors.grey
                    ),
                  ),
                  SizedBox(
@@ -95,7 +106,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                    height: 10,
                    decoration: BoxDecoration(
                        borderRadius:  BorderRadius.all(Radius.circular(12)),
-                       color: progressPercentage==100? Colors.green:Colors.grey
+                       color: progressPercentage>=100? Colors.green:Colors.grey
                    ),
                  ),
                  SizedBox(
