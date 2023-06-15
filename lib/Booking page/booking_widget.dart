@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:intl/date_time_patterns.dart';
 import 'package:sb/Components/Card.dart';
 import 'package:sb/Components/category_tile.dart';
 import 'package:sb/Components/poppintext.dart';
@@ -7,39 +9,70 @@ class BookingWidget extends StatelessWidget {
    BookingWidget({Key? key,
     required this.GymName,
     required  this.GymCategory,
-    required this.BookingStatus,
-    this.offerPrice,
-    this.actualPrice,
+              this.BookingStatus,
+     required this.PaymentStatus,
+     required this.PaymentTime,
+
+    required this.offerPrice,
+    required this.actualPrice,
 
 
   }) : super(key: key);
 
   final String  GymName;
   final String GymCategory;
-  final String BookingStatus;
-  String ?actualPrice = "45";
-  String? offerPrice = "19";
+  late  String? BookingStatus;
+  final String PaymentStatus;
+  final DateTime PaymentTime;
+   final String actualPrice ;
+ final  String offerPrice ;
 
+   Color _getTextColor() {
+     DateTime currentTime = DateTime.now();
+     Color PaymentTextColor;
+     if (PaymentStatus== 'success') {
+       PaymentTextColor = Colors.green;
+       if(currentTime.isBefore(PaymentTime))
+         {
+           BookingStatus='active';
+           return PaymentTextColor;
+         }
+       else {
+         BookingStatus = 'Completed';
+         return PaymentTextColor;
+       }
 
+     } else if (PaymentStatus == 'failed') {
+       PaymentTextColor = Colors.red;
+       BookingStatus = 'Cancelled';
+       return PaymentTextColor;
 
+     }
+     else if (PaymentStatus == 'pending') {
+       BookingStatus = 'pending';
+       PaymentTextColor= Colors.yellow;
+       return PaymentTextColor;
+     }
+     else {
+       BookingStatus = 'pending';
+       return Colors.orange;
+     }
+   }
 
-
-
-  @override
+@override
   Widget build(BuildContext context) {
 
-
     return CardWidget(
-      height: 61,
-      width: 309,
+      height: 91,
+      width: 350,
       child: Row(
         children: [
           Container(
-              width: 73,
-              height: 61,
+              width: 83,
+              height: 81,
               padding: EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.grey,
                 borderRadius: BorderRadius.all(Radius.circular(6)),
               ),
               child: ClipRRect(
@@ -57,43 +90,50 @@ class BookingWidget extends StatelessWidget {
                 Row(children: [
                   Container(
                     width: 187,
-                    height: 31,
+                    height: 40,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         PoppinText(
-                          text: "Gold's Gym",
-                          fontsize: 14,
+                          text: "$GymName",
+                          fontsize: 17,
                           fontWeight: FontWeight.normal,
                           color: Colors.white,
                         ),
                         SizedBox(
-                          height: 1,
+                          height: 4,
                         ),
                         Row(
                           children: [
                             CategoryTile(GymCategory: "$GymCategory"),
-                            SizedBox(width: 2),
+                            SizedBox(width: 5),
                             CategoryTile(GymCategory: "$GymCategory"),
                           ],
                         )
                       ],
                     ),
                   ),
-                  Container(
-                    width: 44,
+                  SizedBox(
+                    width: 75,
                     height: 36,
                     // padding: EdgeInsets.only(top: 4),
                     /// status of booking
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
                         PoppinText(
-                          text: "null"??"$BookingStatus",
-                          color: Colors.white,
-                          fontsize: 6,
+                          text: "$PaymentStatus"??"null",
+                          color: _getTextColor(),
+                          fontsize: 12,
                         ),
+                        PoppinText(
+                          text: "$BookingStatus"??"null",
+                          color: Colors.white,
+                          fontsize: 12,
+                        ),
+
                       ],
                     ),
                   )
@@ -114,7 +154,7 @@ class BookingWidget extends StatelessWidget {
                             ),
                             PoppinTextlineTrought(
                               text: "₹$actualPrice",
-                              fontsize: 7.5,
+                              fontsize: 12,
                               color: Colors.grey,
                             ),
 
@@ -127,7 +167,7 @@ class BookingWidget extends StatelessWidget {
                             ///offer price with coupon
                             PoppinText(
                               text: "₹$offerPrice",
-                              fontsize: 9,
+                              fontsize: 16,
                               color: Color(0xffB3FA3B),
                               fontWeight: FontWeight.bold,
                             ),
@@ -139,11 +179,11 @@ class BookingWidget extends StatelessWidget {
                             PoppinText(
                               text: "plus GST/",
                               color: Colors.white,
-                              fontsize: 6,
+                              fontsize: 9,
                             ),
                             PoppinText(
                               text: "session",
-                              fontsize: 6,
+                              fontsize: 9,
                               color: Color(0xffB3FA3B),
                             )
                           ],
@@ -154,9 +194,10 @@ class BookingWidget extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      width: 110,
+                      width: 100,
                     ),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -164,11 +205,14 @@ class BookingWidget extends StatelessWidget {
                           },
                           child: PoppinTextUnderLined(
                             text: 'More Details',
-                            fontsize: 9.5,
-                            fontWeight: FontWeight.bold,
+                            fontsize: 11,
+                            fontWeight: FontWeight.normal,
                             color: Colors.white,
                           ),
-                        )
+                        ),
+                         SizedBox(
+                           height: 5,
+                         )
                       ],
                     )
                   ],

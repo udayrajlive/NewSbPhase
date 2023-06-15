@@ -12,13 +12,13 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 35,
-      height: 9,
+      width: 45,
+      height: 12,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:  BorderRadius.all(Radius.circular(4.5)),
+        borderRadius:  BorderRadius.all(Radius.circular(16)),
       ),
-      child: Center(child: PoppinText(text: GymCategory, fontWeight:FontWeight.bold, fontsize: 6,))
+      child: Center(child: PoppinText(text: GymCategory, fontWeight:FontWeight.bold, fontsize: 8,))
     );
   }
 }

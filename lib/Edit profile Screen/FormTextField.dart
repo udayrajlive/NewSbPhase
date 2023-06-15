@@ -59,7 +59,11 @@ class FormTextField extends StatelessWidget {
                 fontFamily: "Poppins", color: Colors.white, fontSize: 16),
             labelText: labelText,
             labelStyle:
-                TextStyle(fontFamily: "Poppins", color: Color(0xff505050)),
+                TextStyle(
+
+                    fontFamily: "Poppins", color: Color(0xff505050)
+                )
+            ,
             // border: UnderlineInputBorder(
             //     borderSide: BorderSide.none,
             //     borderRadius: BorderRadius.all(
@@ -77,10 +81,10 @@ class FormTextField extends StatelessWidget {
             fillColor: Color(0xff2C2C2E),
             filled: true,
           ),
-          textAlign: textAlign ?? TextAlign.left,
+          textAlign: textAlign ?? TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.w500,
             fontFamily: "poppins",
             letterSpacing: 0.6,
