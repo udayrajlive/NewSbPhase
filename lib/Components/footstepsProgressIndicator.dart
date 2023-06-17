@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sb/Components/poppintext.dart';
 
 
@@ -45,6 +46,14 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
       height: 200,
       child: Stack(
         children: [
+          // Visibility(
+          //     visible: progressPercentage>=100? true: false,
+          //     child: Positioned(
+          //       child: Lottie.asset('assets/confetti.json',repeat: false),
+          //     )
+          //
+          // ),
+          //
           Positioned(
             left: 30,
             top :25,

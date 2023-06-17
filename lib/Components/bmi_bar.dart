@@ -5,7 +5,12 @@ import 'dart:math';
 import 'package:sb/Components/poppintext.dart';
 
 class BmiBar extends StatelessWidget {
-  const BmiBar({Key? key}) : super(key: key);
+  const BmiBar({
+  required this.bmi,
+  Key? key}) : super(key: key);
+
+  final num bmi;
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,33 +18,7 @@ class BmiBar extends StatelessWidget {
       width: 300,
       height: 180,
       child: Stack(
-        children:
-            [
-
-              // Positioned(
-              //   top: 40,
-              //   left: 2,
-              //   child: Container(
-              //     width: 300,
-              //     height: 180,
-              //     child: ArrowDashboard(
-              //       value:2, // Example value (between 0 and 1)
-              //       minValue: 0,
-              //       maxValue: 100,// Example color for the arrow
-              //     )
-              //   ),
-              // ),
-          //
-          Positioned(
-              left:  50,
-              top:20,
-              child: PoppinText(text: "18.5",fontsize: 18,color: Colors.grey,)),
-          Positioned(
-              right: 50,
-              top :20,
-
-              child: PoppinText(text: "25",fontsize: 18,color: Colors.grey,)),
-
+        children: [
           Positioned(
             top: 30,
             left: 55,
@@ -49,38 +28,57 @@ class BmiBar extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 80,
-              top: 40,
+            top: 25,
+            left: 48,
+            child: SizedBox(width: 215,
+                child: Radialgauge(BMI: bmi)),
+          ),
 
-              child: SizedBox(
-                  height: 25,
-                  child: Image.asset("assets/left_lines.png"))),
           Positioned(
-            right: 80,
-              top: 34,
+            top: 75,
+            left: 130,
 
-              child: SizedBox(
-                  height: 25,
-                  child: Image.asset("assets/right_lines.png"))),
-
-
-              Positioned(
-                top: 25,
-                left: 48,
-
-                child: SizedBox(width:215,
-
-
-
-
-                        child: Radialgauge( BMI: 40)),
+            child: Container(
+              width: 50,
+              alignment: Alignment.center,
+              child: PoppinText(
+                text:  "${bmi.toString()}",
+                fontsize: 20,
+                color: Color(0xffB3FA3F),
               ),
+            ),
+          ),
+
+          Positioned(
+            left: 80,
+            top: 100,
+            child: Container(
+              width: 150,
+              alignment: Alignment.center,
+              child: PoppinText(
+                text:  _getBmiStatus(Bmi: bmi),
+                fontsize: 20,
+                color: Color(0xff7FF133),
+              ),
+            ),
+          )
 
 
-            ],
+        ],
       ),
     );
   }
+}
+
+String _getBmiStatus({required num Bmi}) {
+  if(Bmi<18){
+    return "Underweight";
+
+  }
+  else if(Bmi>=18 && Bmi<=25){
+    return "Normal";
+  }
+  else return " Overweight";
 }
 
 class RainbowBarPainter extends CustomPainter {
@@ -98,10 +96,10 @@ class RainbowBarPainter extends CustomPainter {
       colors: [
         // Colors.white,
         Color(0xffFF5455),
+        Color(0xffFEB92F),
         Color(0xffFFFF30),
         Color(0xffB9FF2F),
         Color(0xff75FD31),
-        Color(0xffFEB92F),
         Color(0xffFE7C3C),
         Color(0xffFF5455),
       ],
@@ -109,7 +107,7 @@ class RainbowBarPainter extends CustomPainter {
         0.0,
         0.3,
         0.4,
-        0.50,
+        0.60,
         0.80,
         0.90,
         1.00,
@@ -132,12 +130,9 @@ class RainbowBarPainter extends CustomPainter {
 }
 
 class Radialgauge extends StatefulWidget {
-  const Radialgauge({
-  required this.BMI
-  ,Key? key}) : super(key: key);
+  const Radialgauge({required this.BMI, Key? key}) : super(key: key);
 
   final num BMI;
-
 
   @override
   State<Radialgauge> createState() => _RadialgaugeState();
@@ -149,26 +144,27 @@ class _RadialgaugeState extends State<Radialgauge> {
     // Create animated radial gauge.
     // All arguments changes will be automatically animated.
     return AnimatedRadialGauge(
-       // initialValue: 40,
+      // initialValue: 40,
       /// The animation duration.
       duration: const Duration(milliseconds: 500),
 
       /// Gauge value.
-      value:  widget.BMI.toDouble(),
+      value: widget.BMI.toDouble(),
 
       /// Provide the [min] and [max] value for the [value] argument.
 
       /// Optionally, you can configure your gauge, providing additional
       /// styles and transformers.
       axis: GaugeAxis(
-
         /// Render the gauge as a 260-degree arc.
         degrees: 180,
-       min: 0,
-        max: 60,
+        min: 0,
+        max: 35,
+
         /// Display the green value progress.
 
-        transformer: const GaugeAxisTransformer.progress(color: Colors.transparent),
+        transformer:
+            const GaugeAxisTransformer.progress(color: Colors.transparent),
 
         /// Set the background color and axis thickness.
         style: const GaugeAxisStyle(

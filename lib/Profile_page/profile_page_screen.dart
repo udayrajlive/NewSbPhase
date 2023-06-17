@@ -8,6 +8,7 @@ import "package:sb/Components/Card.dart";
 import "package:sb/Components/bmi_bar.dart";
 import "package:sb/Components/footstepsProgressIndicator.dart";
 import "package:sb/Components/poppintext.dart";
+import "package:sb/Edit%20profile%20Screen/edit_profile_screen.dart";
 
 
 
@@ -29,8 +30,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   // RefreshController controller = RefreshController();
-  String? targetSteps;
-  String ? newtargetSteps;
+  String ?targetSteps ='2000';
+  String ? newtargetSteps='2000';
 
   @override
   void setState(VoidCallback fn) {
@@ -153,6 +154,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               GestureDetector(
                                 onTap: () {
                                   print("Open edit user details ");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>  EditProfileScreen(name: "name", lname:   "lname", email: "email", dob: "dob", weight: "weight", height: "height", imageUrl: "imageUrl", address: "address", gender: "gender", mobileno: "mobileno")
+                                  ),);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -201,6 +206,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                       color: Colors.white,
                                     ),
                                     content: TextFormField(
+                                      maxLength: 5,
+                                      maxLines: 1,
+
                                       style: TextStyle(
                                         fontFamily: "Poppins",
                                         color: Colors.white,
@@ -318,9 +326,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         )
                       ],
                     ),
-
-                    BmiBar(),
                     ///widget,
+                    BmiBar( bmi: 89,),
+
 
                   ],
                 )
