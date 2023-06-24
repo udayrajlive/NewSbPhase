@@ -380,6 +380,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 }
               },
               child: GreenButton(
+                ontap: (){},
                 width: 160,
                 heigth: 50,
                 text: "Save",

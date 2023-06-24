@@ -51,7 +51,7 @@ class PoppinTextlineTrought extends StatelessWidget {
     return Text(
         text,
         style:  TextStyle(
-
+        overflow: TextOverflow.ellipsis,
         decoration:  TextDecoration.lineThrough,
         decorationThickness: 2,
         decorationStyle: TextDecorationStyle.solid,

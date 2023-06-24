@@ -5,6 +5,8 @@ class GreenButton extends StatelessWidget {
     required  this.width,
     required this.heigth,
     required this.text,
+    required this.ontap,
+    this.fontSize,
 
 
 
@@ -14,6 +16,8 @@ class GreenButton extends StatelessWidget {
   final double width ;
   final double heigth;
   final String text;
+  final double ?fontSize;
+  final VoidCallback  ontap;
 
 
 
@@ -23,13 +27,19 @@ class GreenButton extends StatelessWidget {
       width: width ?? 160,
       height: heigth?? 35,
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color:  Color(0xffB3FA3F).withOpacity(0.25),
+            blurRadius: 10,
+          )
+        ],
           color: Color(0xffB3FA3F),
           borderRadius: BorderRadius.all(Radius.circular(6))),
       child: Center(
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: fontSize??20,
             fontFamily:"Poppins",
             fontWeight: FontWeight.bold,
             color: Colors.black,

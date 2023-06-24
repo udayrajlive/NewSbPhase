@@ -41,7 +41,7 @@ class _BookingPageState extends State<BookingPage> {
             Divider(
               color: Colors.grey,
             ),
-            BookingWidget(GymName: "Gold's gym", GymCategory: "Luxury", PaymentStatus: "success", PaymentTime: DateTime(2023, 6, 13, 9, 0, 0), actualPrice: '49', offerPrice: '19', )
+            BookingWidget(gymName: "Gold's gym", gymCategory: "Luxury", paymentStatus: "failed", paymentTime: DateTime(2023, 6, 13, 9, 0, 0), actualPrice: '49', offerPrice: '19', )
 
 
 

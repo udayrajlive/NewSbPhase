@@ -8,6 +8,7 @@ class CardWidget extends StatelessWidget {
     this.child,
     this.padding,
     this.color,
+    this.borderRadius,
   }) : super(key: key);
 
   final double height;
@@ -15,6 +16,7 @@ class CardWidget extends StatelessWidget {
   final Widget? child;
   final Color? color;
   final EdgeInsetsGeometry? padding;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CardWidget extends StatelessWidget {
       height: height,
       decoration:  BoxDecoration(
         color:  color ??Color(0xff2C2C2E),
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        borderRadius: BorderRadius.all(Radius.circular(borderRadius??6)),
       ),
       child: child,
     );
